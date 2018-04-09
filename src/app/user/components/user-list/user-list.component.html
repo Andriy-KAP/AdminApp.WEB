@@ -1,0 +1,30 @@
+<mat-table [dataSource]="dataSource" matSort>
+    <ng-container matColumnDef="id">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>#</mat-header-cell>
+        <mat-cell *matCellDef="let user">{{user.id}}</mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="email">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Email</mat-header-cell>
+        <mat-cell *matCellDef="let user">{{user.email}}</mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="password">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Password</mat-header-cell>
+        <mat-cell *matCellDef="let user">{{user.hashedPassword}}</mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="operations">
+            <mat-header-cell *matHeaderCellDef mat-sort-header></mat-header-cell>
+            <mat-cell *matCellDef="let user">
+                    <button (click)="edit(user)" mat-button color="primary">Edit</button>
+                    <button mat-button color="primary">Delete</button>
+            </mat-cell>
+        </ng-container>
+    <mat-header-row *matHeaderRowDef="pagination.columns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: pagination.columns"></mat-row>
+</mat-table>
+<mat-paginator #paginator
+                [length]="pagination.resultLength"
+                [pageSize]="10"
+                [pageSizeOptions]="[5,10,20]"
+                [showFirstLastButtons]="true"
+                (page)="onPageChanged($event)">
+</mat-paginator>

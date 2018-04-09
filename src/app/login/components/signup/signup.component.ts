@@ -49,7 +49,8 @@ export class SignupComponent implements OnInit{
             });
             return;
         }
-        let user: UserModel = new UserModel(this.form.value['username'], this.form.value['password']);
+        debugger;
+        let user: UserModel = new UserModel(this.form.value['username'], this.form.value['password'], '10');
         this.loginService.getToken(user).subscribe((response)=>{
             console.log(response);
             CustomHttp.saveToken(response.data);

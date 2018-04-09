@@ -5,5 +5,12 @@ import { Component } from "@angular/core";
     templateUrl: './user.component.html'
 })
 export class UserComponent{
-    
+    public isDataLoaded: boolean = false; 
+
+    onDataLoaded(event: any):void{
+        this.isDataLoaded = true;
+    }
+    onDataLoading(event: any):void{
+        this.isDataLoaded = false;
+    }
 }

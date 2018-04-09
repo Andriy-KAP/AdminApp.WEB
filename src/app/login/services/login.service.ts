@@ -15,8 +15,9 @@ export class LoginService {
             'Accept': 'application/json'
         });
         let params: HttpParams = new HttpParams()
-            .set('Email', user.username)
-            .set('Password', user.password);
+            .set('Email', user.email)
+            .set('Password', user.password)
+            .set('DataCount', user.dataCount);
 
         return this.http.post('Account/Login', headers, params);
     }
