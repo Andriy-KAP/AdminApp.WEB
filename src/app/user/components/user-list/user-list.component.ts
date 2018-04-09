@@ -57,7 +57,11 @@ export class UserListComponent implements OnInit {
           });
       
           dialogRef.afterClosed().subscribe(result => {
-            console.log('The dialog was closed');
+            let user = new User(1,result.email, result.hashedPassword)
+            this.service.editUser(user)
+                .subscribe((response)=>{
+
+                });
           });
     } 
 }

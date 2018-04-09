@@ -9,6 +9,7 @@ export class UserEditComponent{
     constructor(public dialogRef: MatDialogRef<UserEditComponent>, @Inject(MAT_DIALOG_DATA) public data: any) { }
     
       save(): void {
+        debugger;
         this.dialogRef.close();
       }
 }
