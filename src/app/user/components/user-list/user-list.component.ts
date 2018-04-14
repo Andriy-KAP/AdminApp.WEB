@@ -4,6 +4,10 @@ import { User } from "../../models/user.model";
 import { MatPaginator, MatSort, MatTableDataSource, MatDialog } from '@angular/material';
 import { UserListService } from "../../services/user-list.service";
 import { UserEditComponent } from "./components/edit/user-edit.component";
+import { UserRemoveComponent } from "./components/remove/user-remove.component";
+import { GroupService } from "../../../group/services/group.service";
+import { Group } from "../../../group/models/group.model";
+import { UserCreateComponent } from "./components/create/user-create.component";
 
 @Component({
     selector: 'user-list',
@@ -21,7 +25,9 @@ export class UserListComponent implements OnInit {
     isLoadingResults = true;
     isRateLimitReached = false;
 
-    constructor(private service: UserListService, public dialog: MatDialog){
+    private existingGroups: Group[];
+
+    constructor(private service: UserListService, public dialog: MatDialog, private groupService: GroupService){
         this.pagination = new UserPaginationModel();
         this.loaded = new EventEmitter<any>();
         this.loading = new EventEmitter<any>();
@@ -29,7 +35,10 @@ export class UserListComponent implements OnInit {
     }
 
     ngOnInit(){
-        
+        this.groupService.getGroups()
+            .subscribe((response)=>{
+                this.existingGroups= response.data;
+            })
     }
     ngAfterViewInit(){
         this.loadUsers(this.paginator.pageIndex, this.paginator.pageSize, this.pagination);
@@ -43,8 +52,8 @@ export class UserListComponent implements OnInit {
         this.loading.emit(null);
         this.service.getUsers(pageIndex+1, pageSize)
         .subscribe((response)=>{
-            
-            this.dataSource = new MatTableDataSource(response.data.items);
+            this.pagination.users = response.data.items;
+            this.dataSource = new MatTableDataSource(this.pagination.users);
             this.dataSource.sort = this.sort;
             paginationModel.resultLength = response.data.totalCount;
             this.loaded.emit(null);
@@ -53,15 +62,50 @@ export class UserListComponent implements OnInit {
     edit(user: User){
         let dialogRef = this.dialog.open(UserEditComponent, {
             width: '550px',
-            data: { email: user['email'], hashedPassword: user['hashedPassword'] }
+            data: { id: user['id'], 
+            email: user['email'], 
+            hashedPassword: user['hashedPassword'], 
+            groupName: user['groupName'], 
+            groupId: user['groupId'],
+            groups: this.existingGroups    
+        }
           });
       
           dialogRef.afterClosed().subscribe(result => {
-            let user = new User(1,result.email, result.hashedPassword)
-            this.service.editUser(user)
-                .subscribe((response)=>{
-
-                });
+            if(result){
+                let user = new User(result.id, result.email, result.groupId, result.groupName, result.hashedPassword)
+                this.service.editUser(user)
+                    .subscribe((response)=>{
+                        this.loadUsers(this.paginator.pageIndex, this.paginator.pageSize, this.pagination);
+                    });
+            }
           });
-    } 
+    }
+    remove(id: number){
+        let dialogRef = this.dialog.open(UserRemoveComponent, {
+            width: '300px',
+            data: { id: id }
+        });
+
+        dialogRef.afterClosed().subscribe(result =>{
+            if(result){
+                this.service.deleteUser(result.id)
+                    .subscribe((response)=>{
+                        this.loadUsers(this.paginator.pageIndex, this.paginator.pageSize, this.pagination);
+                    });
+            }
+        })
+    }
+    create(){
+        let dialogRef = this.dialog.open(UserCreateComponent, {
+            width: '500px',
+            data: {
+                groups: this.existingGroups
+            }
+        });
+
+        dialogRef.afterClosed().subscribe(result=>{
+
+        })
+    }
 }

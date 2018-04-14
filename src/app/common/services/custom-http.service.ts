@@ -6,6 +6,7 @@ import 'rxjs/add/observable/throw';
 import { BadInput } from "../models/error_models/bad-input.model";
 import { NotFoundError } from "../models/error_models/not-found.model";
 import { AppError } from "../models/error_models/app-error.model";
+import { JwtHelper } from "angular2-jwt/angular2-jwt";
 
 @Injectable()
 export class CustomHttp{
@@ -24,7 +25,12 @@ export class CustomHttp{
     static removeToken():void{
         sessionStorage.removeItem('auth');
     }
-
+    static setClaimsObject(token: string){
+        let jwtHelper = new JwtHelper();
+        let claimsObject = jwtHelper.decodeToken(token);
+        sessionStorage.setItem('unique_name', claimsObject.unique_name);
+        sessionStorage.setItem('expiration_date', jwtHelper.getTokenExpirationDate(token).toString())
+    }
     private errorHandling(error:Response){
         if(error.status === 404)
             return Observable.throw(new NotFoundError(''));

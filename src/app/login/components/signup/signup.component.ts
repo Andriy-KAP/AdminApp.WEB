@@ -52,8 +52,8 @@ export class SignupComponent implements OnInit{
         debugger;
         let user: UserModel = new UserModel(this.form.value['username'], this.form.value['password'], '10');
         this.loginService.getToken(user).subscribe((response)=>{
-            console.log(response);
             CustomHttp.saveToken(response.data);
+            CustomHttp.setClaimsObject(response.data);
             this.router.navigate(['/']);
         });
     }

@@ -9,6 +9,7 @@ import { routes } from './common/routing/routing'
 
 /* Custom components */
 import { NotFoundComponent } from "./common/components/notFound/not-found.component";
+import { AuthGuard } from "./common/guards/auth-guard.service";
 
 @NgModule({
   declarations: [
@@ -20,7 +21,9 @@ import { NotFoundComponent } from "./common/components/notFound/not-found.compon
     BrowserAnimationsModule,
     RouterModule.forRoot(routes)
   ],
-  providers: [],
+  providers: [
+    AuthGuard
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

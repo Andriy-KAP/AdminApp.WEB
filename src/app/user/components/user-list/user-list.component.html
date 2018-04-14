@@ -1,3 +1,6 @@
+<mat-card-title>
+    <button (click)="create()" mat-button color="primary">Create</button>
+</mat-card-title>
 <mat-table [dataSource]="dataSource" matSort>
     <ng-container matColumnDef="id">
         <mat-header-cell *matHeaderCellDef mat-sort-header>#</mat-header-cell>
@@ -7,15 +10,15 @@
         <mat-header-cell *matHeaderCellDef mat-sort-header>Email</mat-header-cell>
         <mat-cell *matCellDef="let user">{{user.email}}</mat-cell>
     </ng-container>
-    <ng-container matColumnDef="password">
-        <mat-header-cell *matHeaderCellDef mat-sort-header>Password</mat-header-cell>
-        <mat-cell *matCellDef="let user">{{user.hashedPassword}}</mat-cell>
+    <ng-container matColumnDef="groupName">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Group</mat-header-cell>
+        <mat-cell *matCellDef="let user">{{user.groupName}}</mat-cell>
     </ng-container>
     <ng-container matColumnDef="operations">
             <mat-header-cell *matHeaderCellDef mat-sort-header></mat-header-cell>
             <mat-cell *matCellDef="let user">
                     <button (click)="edit(user)" mat-button color="primary">Edit</button>
-                    <button mat-button color="primary">Delete</button>
+                    <button (click)="remove(user.id)" mat-button color="primary">Delete</button>
             </mat-cell>
         </ng-container>
     <mat-header-row *matHeaderRowDef="pagination.columns"></mat-header-row>

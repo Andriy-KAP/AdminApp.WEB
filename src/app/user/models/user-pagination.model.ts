@@ -6,6 +6,6 @@ export class UserPaginationModel{
     public resultLength: number;
 
     constructor(){
-        this.columns = ['email','password','operations'];
+        this.columns = ['id','email','groupName','operations'];
     }
 }

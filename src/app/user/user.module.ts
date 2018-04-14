@@ -11,12 +11,17 @@ import { MatTableModule,
     MatButtonModule,
     MatDialogModule,
     MatFormFieldModule, 
-    MatInputModule} from '@angular/material';
+    MatInputModule,
+    MatSelectModule,
+    MatCardModule} from '@angular/material';
 import { UserListService } from "./services/user-list.service";
 import { HttpClientModule } from "@angular/common/http";
 import { CustomHttp } from "../common/services/custom-http.service";
 import { UserEditComponent } from "./components/user-list/components/edit/user-edit.component";
-import { FormsModule } from "@angular/forms";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { UserRemoveComponent } from "./components/user-list/components/remove/user-remove.component";
+import { GroupService } from "../group/services/group.service";
+import { UserCreateComponent } from "./components/user-list/components/create/user-create.component";
 
 const routes: Routes=[
     {
@@ -29,10 +34,13 @@ const routes: Routes=[
     declarations: [
         UserComponent,
         UserListComponent,
-        UserEditComponent
+        UserEditComponent,
+        UserRemoveComponent,
+        UserCreateComponent
     ],
     imports: [
         FormsModule,
+        ReactiveFormsModule,
         CommonModule,
         LayoutModule,
         RouterModule.forChild(routes),
@@ -44,14 +52,17 @@ const routes: Routes=[
         MatButtonModule,
         MatDialogModule,
         MatFormFieldModule,
-        MatInputModule
+        MatInputModule,
+        MatSelectModule,
+        MatCardModule
     ],
     providers: [
         UserListService,
+        GroupService,
         CustomHttp
     ],
     bootstrap: [ UserComponent ],
-    entryComponents: [ UserEditComponent ]
+    entryComponents: [ UserEditComponent, UserRemoveComponent, UserCreateComponent ]
 })
 export class UserModule{
 
