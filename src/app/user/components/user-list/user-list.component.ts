@@ -30,8 +30,7 @@ export class UserListComponent implements OnInit {
     constructor(private service: UserListService, public dialog: MatDialog, private groupService: GroupService){
         this.pagination = new UserPaginationModel();
         this.loaded = new EventEmitter<any>();
-        this.loading = new EventEmitter<any>();
-        
+        this.loading = new EventEmitter<any>(); 
     }
 
     ngOnInit(){
