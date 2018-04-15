@@ -14,7 +14,8 @@ export class UserCreateComponent{
         this.form = new UserCreateFormGroup();
         this.dataArray = data.groups;
     }
-    save():void {
-        this.dialogRef.close();
+    create():void {
+        debugger;
+        this.dialogRef.close(this.form);
     }
 }

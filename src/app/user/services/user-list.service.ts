@@ -42,4 +42,18 @@ export class UserListService{
 
         return this.http.post('User/Remove', headers, params);
     }
+    createUser(user: User){
+        debugger;
+        let headers: HttpHeaders = new HttpHeaders({
+            'Content-Type': 'application/x-www-form-urlencoded',
+            'Accept': 'application/json',
+            'Authorization': `Bearer ${sessionStorage.getItem('auth')}`
+        });
+        let params: HttpParams = new HttpParams()
+            .set('Email', user.username)
+            .set('Password', user.hashedPassword)
+            .set('GroupId', user.groupId.toString()) 
+
+        return this.http.post('User/Create', headers, params);
+    }
 }

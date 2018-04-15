@@ -1,4 +1,4 @@
-import { Validators, AsyncValidator, FormControl, AsyncValidatorFn, FormGroup } from "@angular/forms";
+import { Validators, AsyncValidator, FormControl, AsyncValidatorFn, FormGroup, ValidatorFn } from "@angular/forms";
 
 export class UserCreateFormControl extends FormControl {
     label: string;
@@ -6,7 +6,7 @@ export class UserCreateFormControl extends FormControl {
     placeholder: string;
     modelProperty: string;
 
-    constructor(modelProperty: string, label: string, type: string, placeholder: string, value: string, validators: Validators[], asyncValidators?: AsyncValidatorFn[]){
+    constructor(modelProperty: string, label: string, type: string, placeholder: string, value: string, validators: ValidatorFn[], asyncValidators?: AsyncValidatorFn[]){
         super(value, validators, asyncValidators);
         this.label = label;
         this.type= type;
@@ -37,7 +37,7 @@ export class UserCreateFormGroup extends FormGroup{
                 Validators.required,
                 Validators.minLength(5)
             ]),
-            group: new UserCreateFormControl('group', 'Group', 'select', 'group', '',[
+            groupId: new UserCreateFormControl('groupId', 'Group', 'select', 'Group', '',[
                 Validators.required
             ])
         })

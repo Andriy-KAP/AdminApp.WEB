@@ -105,7 +105,13 @@ export class UserListComponent implements OnInit {
         });
 
         dialogRef.afterClosed().subscribe(result=>{
-
+            if(result){
+                let user = new User(null, result.value.username, result.value.groupId, null, result.value.password)
+                this.service.createUser(user)
+                    .subscribe((response)=>{
+                        debugger;
+                    })
+            }
         })
     }
 }
