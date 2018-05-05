@@ -1,20 +1,20 @@
 <mat-drawer-container class="example-container" autosize>
-  <mat-drawer #drawer class="example-sidenav" mode="side">
-    <p>Auto-resizing sidenav</p>
-    <p *ngIf="showFiller">Lorem, ipsum dolor sit amet consectetur.</p>
-    <button (click)="showFiller = !showFiller" mat-raised-button>
-      Toggle extra text
-    </button>
-  </mat-drawer>
-  <mat-toolbar color="primary">
-    <span (click)="drawer.toggle()">Admin app</span>
+    <mat-drawer #drawer class="example-sidenav" mode="side">
+      <p>Auto-resizing sidenav</p>
+      <p *ngIf="showFiller">Lorem, ipsum dolor sit amet consectetur.</p>
+      <button (click)="showFiller = !showFiller" mat-raised-button>
+        Toggle extra text
+      </button>
+    </mat-drawer>
+    <mat-toolbar color="primary">
+      <span (click)="drawer.toggle()">Admin app</span>
 
-  <!-- This fills the remaining space of the current row -->
-    <span class="example-fill-remaining-space"></span>
+    <!-- This fills the remaining space of the current row -->
+      <span class="example-fill-remaining-space"></span>
 
-    <span>Right Aligned Text</span>
-</mat-toolbar>
-  <div class="container-fluid">
-    <ng-content></ng-content>
-  </div>
-</mat-drawer-container>
+      <span>Right Aligned Text</span>
+  </mat-toolbar>
+    <div class="container-fluid">
+      <ng-content></ng-content>
+    </div>
+  </mat-drawer-container>

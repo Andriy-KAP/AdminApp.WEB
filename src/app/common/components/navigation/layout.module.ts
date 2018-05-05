@@ -7,6 +7,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 
 import { LayoutComponent } from "./layout.component";
 import { MatSnackBarModule } from "@angular/material";
+import { SignalRService } from "../../../user/services/signalr.service";
 @NgModule({
     imports: [
         CommonModule,
@@ -17,7 +18,9 @@ import { MatSnackBarModule } from "@angular/material";
     declarations: [
         LayoutComponent
     ],
-    providers: [],
+    providers: [
+        SignalRService
+    ],
     exports: [
         CommonModule,
         MatSidenavModule,

@@ -33,6 +33,9 @@ export class SignalRService{
         //call the connection start method
         this.startConnection();
     }
+    private subscribeToEvents(){
+
+    }
     public connectToGroup()
     {
         let token = sessionStorage.getItem('auth');
@@ -55,7 +58,6 @@ export class SignalRService{
             console.log('Now connected ' + data.transport.name + ', connection ID= ' + data.id);  
             this.connectionEstablished.emit(true);  
             this.connectionExist = true;  
-            //debugger;
             this.proxy.invoke('JoinGroup');
         }).fail((error: any) => {  
             console.log('Could not connect ' + error); 
@@ -63,10 +65,13 @@ export class SignalRService{
         });
     }  
     private registerOnServerEvents(): void {  
-        debugger;
         this.proxy.on('notify', (data: GetMessage) => {
-            console.log('received in SignalRService: ' + JSON.stringify(data));  
             this.messageReceived.emit(data);
         });  
+    }
+    public openSnackBar(snackBar: MatSnackBar, message: string){
+        snackBar.open(message,'',{
+            duration: 5000
+        });
     }  
 }
