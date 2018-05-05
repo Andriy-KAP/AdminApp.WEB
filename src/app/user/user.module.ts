@@ -13,7 +13,8 @@ import { MatTableModule,
     MatFormFieldModule, 
     MatInputModule,
     MatSelectModule,
-    MatCardModule} from '@angular/material';
+    MatCardModule,
+    MatSnackBarModule} from '@angular/material';
 import { UserListService } from "./services/user-list.service";
 import { HttpClientModule } from "@angular/common/http";
 import { CustomHttp } from "../common/services/custom-http.service";
@@ -22,6 +23,8 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { UserRemoveComponent } from "./components/user-list/components/remove/user-remove.component";
 import { GroupService } from "../group/services/group.service";
 import { UserCreateComponent } from "./components/user-list/components/create/user-create.component";
+import { SignalRService } from "./services/signalr.service";
+import { NotificationComponent } from "../common/components/notification/notification.component";
 
 const routes: Routes=[
     {
@@ -36,7 +39,8 @@ const routes: Routes=[
         UserListComponent,
         UserEditComponent,
         UserRemoveComponent,
-        UserCreateComponent
+        UserCreateComponent,
+        NotificationComponent
     ],
     imports: [
         FormsModule,
@@ -54,15 +58,17 @@ const routes: Routes=[
         MatFormFieldModule,
         MatInputModule,
         MatSelectModule,
-        MatCardModule
+        MatCardModule,
+        MatSnackBarModule
     ],
     providers: [
         UserListService,
         GroupService,
-        CustomHttp
+        CustomHttp,
+        SignalRService
     ],
     bootstrap: [ UserComponent ],
-    entryComponents: [ UserEditComponent, UserRemoveComponent, UserCreateComponent ]
+    entryComponents: [ UserEditComponent, UserRemoveComponent, UserCreateComponent, NotificationComponent ]
 })
 export class UserModule{
 

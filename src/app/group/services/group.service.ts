@@ -17,6 +17,6 @@ export class GroupService {
             .set('PageIndex', pageIndex.toString())
             .set('PageSize', pageSize.toString())
             
-        return this.http.get(`Group/GetGroupsCollection`, headers);
+        return this.http.get(`Group/GetGroupsCollection?PageIndex=${pageIndex}&PageSize=${pageSize}`, headers);
     }
 }

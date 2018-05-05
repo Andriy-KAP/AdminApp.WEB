@@ -11,7 +11,7 @@ export class UserEditComponent implements OnInit{
 
     constructor(public dialogRef: MatDialogRef<UserEditComponent>, 
     @Inject(MAT_DIALOG_DATA) public data: any) {
-      this.dataArray = data.groups;
+      this.dataArray = data.groups.items;
       console.log(this.dataArray);
     }
     

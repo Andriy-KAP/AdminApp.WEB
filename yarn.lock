@@ -216,6 +216,10 @@
   dependencies:
     "@types/jasmine" "*"
 
+"@types/jquery@*", "@types/jquery@^3.3.1":
+  version "3.3.1"
+  resolved "https://registry.yarnpkg.com/@types/jquery/-/jquery-3.3.1.tgz#55758d44d422756d6329cbf54e6d41931d7ba28f"
+
 "@types/node@^6.0.46", "@types/node@~6.0.60":
   version "6.0.104"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-6.0.104.tgz#5a17c151c223041602f11a404db9a00e54250174"
@@ -227,6 +231,12 @@
 "@types/selenium-webdriver@^2.53.35", "@types/selenium-webdriver@~2.53.39":
   version "2.53.43"
   resolved "https://registry.yarnpkg.com/@types/selenium-webdriver/-/selenium-webdriver-2.53.43.tgz#2de3d718819bc20165754c4a59afb7e9833f6707"
+
+"@types/signalr@^2.2.35":
+  version "2.2.35"
+  resolved "https://registry.yarnpkg.com/@types/signalr/-/signalr-2.2.35.tgz#88b37702fac663c91a0f655a3577cba2d20fb2f1"
+  dependencies:
+    "@types/jquery" "*"
 
 "@types/strip-bom@^3.0.0":
   version "3.0.0"

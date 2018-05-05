@@ -12,10 +12,15 @@ export class UserCreateComponent{
 
     constructor(public dialogRef: MatDialogRef<UserCreateComponent>, @Inject(MAT_DIALOG_DATA) public data: any){
         this.form = new UserCreateFormGroup();
-        this.dataArray = data.groups;
+        this.dataArray = data.groups.items;
     }
     create():void {
         debugger;
-        this.dialogRef.close(this.form);
+        if(this.form.valid){
+            this.dialogRef.close(this.form);
+        }
+    }
+    close():void{
+        this.dialogRef.close();
     }
 }

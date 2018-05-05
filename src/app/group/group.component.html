@@ -1,3 +1,9 @@
 <layout>
-    <group-list></group-list>
+    <group-list (loaded)="onDataLoaded($event)" loading="onDataLoading($event)"></group-list>
+    <div class="example-loading-shade" *ngIf="!isDataLoaded">
+        <mat-spinner *ngIf="!isDataLoaded"></mat-spinner>
+        <div class="example-rate-limit-reached" *ngIf="isRateLimitReached">
+            Rate limit has been reached. It will be reset in one minute
+        </div>
+    </div>
 </layout>

@@ -1,10 +1,18 @@
-import { Validators, AsyncValidator, FormControl, AsyncValidatorFn, FormGroup, ValidatorFn } from "@angular/forms";
+import { Validators, AsyncValidator, FormControl, AsyncValidatorFn, FormGroup, ValidatorFn, NgForm, FormGroupDirective } from "@angular/forms";
+import { ErrorStateMatcher } from "@angular/material";
 
+export class UserCreateErrorMatcher implements ErrorStateMatcher{
+    isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null):boolean{
+        const isSubmitted = form && form.submitted;
+        return !!(control && control.invalid && (control.dirty || control.touched || isSubmitted));
+    }
+}
 export class UserCreateFormControl extends FormControl {
     label: string;
     type: string;
     placeholder: string;
     modelProperty: string;
+    matcher: UserCreateErrorMatcher;
 
     constructor(modelProperty: string, label: string, type: string, placeholder: string, value: string, validators: ValidatorFn[], asyncValidators?: AsyncValidatorFn[]){
         super(value, validators, asyncValidators);
@@ -12,6 +20,7 @@ export class UserCreateFormControl extends FormControl {
         this.type= type;
         this.placeholder = placeholder;
         this.modelProperty= modelProperty;
+        this.matcher = new UserCreateErrorMatcher();
     }
 
     getValidationMessages(){

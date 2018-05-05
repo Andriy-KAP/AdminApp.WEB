@@ -2,21 +2,26 @@
 <div mat-dialog-content>
     <form [formGroup]="form">
         <div class="form-group" *ngFor="let control of form.userCreateControls()">
-            <mat-select formControlName="{{control.modelProperty}}" *ngIf="control.type == 'select'">
+            
+            <mat-select [errorStateMatcher]="control.matcher" formControlName="{{control.modelProperty}}" *ngIf="control.type == 'select'">
                 <mat-option *ngFor="let group of dataArray" [value]="group.id">{{group.name}}</mat-option>
+                <!--<mat-error *ngFor="let message of control.getValidationMessages() ">{{message}}</mat-error>-->
             </mat-select>
+            <!--<mat-error *ngFor="let message of control.getValidationMessages() ">{{message}}</mat-error>-->
+             <mat-error *ngFor="let message of control.getValidationMessages()"></mat-error>
             <mat-form-field *ngIf="control.type != 'select'">
-                <input matInput formControlName="{{control.modelProperty}}" type="{{control.type}}" placeholder="{{control.placeholder}}">
+                <input matInput [errorStateMatcher]="control.matcher" formControlName="{{control.modelProperty}}" type="{{control.type}}" placeholder="{{control.placeholder}}">
+                <mat-error *ngFor="let message of control.getValidationMessages() ">{{message}}</mat-error>
             </mat-form-field>
-            <div *ngIf="control.dirty && control.invalid">
+            <!--<div *ngIf="control.dirty && control.invalid">
                 <div class="alert alert-danger" *ngFor="let message of control.getValidationMessages()">
                     {{message}}
                 </div>
-            </div>
+            </div>-->
         </div>
     </form>
 </div>
 <div mat-dialog-actions>
-    <button mat-button (click)="onNoClick()">Cansel</button>
+    <button mat-button (click)="close()">Cancel</button>
     <button mat-button (click)="create()">Create</button>
 </div>

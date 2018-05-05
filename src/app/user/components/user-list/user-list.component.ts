@@ -1,4 +1,4 @@
-import { Component, ViewChild, OnInit, Injectable, EventEmitter, Output } from "@angular/core";
+import { Component, ViewChild, OnInit, Injectable, EventEmitter, Output, NgZone } from "@angular/core";
 import { UserPaginationModel } from "../../models/user-pagination.model";
 import { User } from "../../models/user.model";
 import { MatPaginator, MatSort, MatTableDataSource, MatDialog } from '@angular/material';
@@ -8,11 +8,14 @@ import { UserRemoveComponent } from "./components/remove/user-remove.component";
 import { GroupService } from "../../../group/services/group.service";
 import { Group } from "../../../group/models/group.model";
 import { UserCreateComponent } from "./components/create/user-create.component";
+import { GetMessage } from "../../services/getmessage";
+import { SignalRService } from "../../services/signalr.service";
 
 @Component({
     selector: 'user-list',
     templateUrl: './user-list.component.html'
 })
+
 @Injectable()
 export class UserListComponent implements OnInit {
     public pagination: UserPaginationModel;
@@ -27,14 +30,44 @@ export class UserListComponent implements OnInit {
 
     private existingGroups: Group[];
 
-    constructor(private service: UserListService, public dialog: MatDialog, private groupService: GroupService){
+    public currentMessage: GetMessage;
+    public allMessages: GetMessage;
+    public canSendMessage: Boolean;
+
+    @Output() onCreated = new EventEmitter<boolean>();
+
+    constructor(private service: UserListService, public dialog: MatDialog, private groupService: GroupService, private _signalRService: SignalRService, private _ngZone: NgZone){
         this.pagination = new UserPaginationModel();
         this.loaded = new EventEmitter<any>();
-        this.loading = new EventEmitter<any>(); 
-    }
+        this.loading = new EventEmitter<any>();
 
+        // this can subscribe for events  
+        this.subscribeToEvents();  
+        // this can check for conenction exist or not.  
+        this.canSendMessage = _signalRService.connectionExist;  
+        // this method call every second to tick and respone tansfered to client.  
+        // setInterval(() => {  
+        //     //this._signalRService.sendMessage();
+        //     this._signalRService.connectToGroup();
+        // }, 10000);
+    }
+    private subscribeToEvents(): void {  
+        // if connection exists it can call of method.  
+        this._signalRService.connectionEstablished.subscribe(() => {  
+            this.canSendMessage = true;  
+            this._signalRService.connectToGroup();
+        });  
+        // finally our service method to call when response received from server event and transfer response to some variable to be shwon on the browser.  
+        this._signalRService.messageReceived.subscribe((message: GetMessage) => {    
+            this._ngZone.run(() => {
+                this.allMessages = message;
+                this.onCreated.emit(true);
+                //this._signalRService.openSnackBar('New user has been created.');
+            });  
+        });  
+    }
     ngOnInit(){
-        this.groupService.getGroups()
+        this.groupService.getGroups(1, 2)
             .subscribe((response)=>{
                 this.existingGroups= response.data;
             })
@@ -62,12 +95,12 @@ export class UserListComponent implements OnInit {
         let dialogRef = this.dialog.open(UserEditComponent, {
             width: '550px',
             data: { id: user['id'], 
-            email: user['email'], 
-            hashedPassword: user['hashedPassword'], 
-            groupName: user['groupName'], 
-            groupId: user['groupId'],
-            groups: this.existingGroups    
-        }
+                email: user['email'], 
+                hashedPassword: user['hashedPassword'], 
+                groupName: user['groupName'], 
+                groupId: user['groupId'],
+                groups: this.existingGroups    
+            }
           });
       
           dialogRef.afterClosed().subscribe(result => {
@@ -108,7 +141,7 @@ export class UserListComponent implements OnInit {
                 let user = new User(null, result.value.username, result.value.groupId, null, result.value.password)
                 this.service.createUser(user)
                     .subscribe((response)=>{
-                        debugger;
+                        this._signalRService.sendMessageToGroup();
                     })
             }
         })

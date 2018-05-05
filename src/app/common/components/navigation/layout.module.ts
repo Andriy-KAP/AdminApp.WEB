@@ -6,11 +6,13 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
 
 import { LayoutComponent } from "./layout.component";
+import { MatSnackBarModule } from "@angular/material";
 @NgModule({
     imports: [
         CommonModule,
         MatSidenavModule,
-        MatToolbarModule
+        MatToolbarModule,
+        MatSnackBarModule
     ],
     declarations: [
         LayoutComponent
