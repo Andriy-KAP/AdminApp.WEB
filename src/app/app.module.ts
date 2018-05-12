@@ -9,8 +9,12 @@ import { routes } from './common/routing/routing'
 
 /* Custom components */
 import { NotFoundComponent } from "./common/components/notFound/not-found.component";
+
+/* Guards */
 import { AuthGuard } from "./common/guards/auth-guard.service";
 import { JwtHelper } from 'angular2-jwt';
+import { AdminGuard } from './common/guards/admin-guard.service';
+import { LoginGuard } from './common/guards/login-guard.service';
 
 @NgModule({
   declarations: [
@@ -23,8 +27,10 @@ import { JwtHelper } from 'angular2-jwt';
     RouterModule.forRoot(routes)
   ],
   providers: [
+    JwtHelper,
     AuthGuard,
-    JwtHelper
+    AdminGuard,
+    LoginGuard
   ],
   bootstrap: [AppComponent]
 })
