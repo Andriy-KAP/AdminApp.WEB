@@ -8,11 +8,6 @@ body{
     height: 100%;
     margin: 0;
 }
-.example-container {
-  width: 100%;
-  height: 100%;
-  border: 1px solid rgba(0, 0, 0, 0.5);
-}
 
 .example-sidenav-content {
   display: flex;
@@ -22,7 +17,7 @@ body{
 }
 
 .example-sidenav {
-  padding: 20px;
+  min-width: 150px;
 }
 .example-fill-remaining-space {
   /* This fills the remaining space, by using flexbox. 
@@ -32,9 +27,12 @@ body{
 
 /* Structure */
 .example-container {
+  width: 100%;
+  height: 100%;
+  max-height: 100%;
+  border: 1px solid rgba(0, 0, 0, 0.5);
   display: flex;
   flex-direction: column;
-  max-height: 500px;
   min-width: 300px;
   position: relative;
 }
@@ -79,4 +77,35 @@ body{
 
 .mat-column-created {
   max-width: 124px;
+}
+.mat-toolbar-multiple-rows {
+  min-height: 64px;
+  height: 100%;
+}
+.sidenav-toolbar{
+  /* padding-top: 64px; */
+}
+.sidenav-toolbar .mat-toolbar-row{
+  padding: 0px;
+}
+.sidenav-toolbar .mat-toolbar-row mat-icon{
+  margin-left: 10px;
+}
+.sidenav-toolbar .mat-toolbar-row a{
+  padding: 20px 0px 0px 5px;
+  height: inherit;
+  width: 100%;
+}
+.sidenav-toolbar .mat-toolbar-row a:hover{
+  text-decoration: none;
+}
+/* style for routerActiveLink*/
+.active-mat-toolbar-row{
+  background-color: #404b88;
+}
+.sidenav-toolbar .mat-toolbar-row:hover:not(:first-child){
+  background-color: #404b88;
+}
+.sidenav-toolbar .mat-toolbar-row span{
+  padding-left: 20px;
 }

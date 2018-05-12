@@ -6,14 +6,18 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
 
 import { LayoutComponent } from "./layout.component";
-import { MatSnackBarModule } from "@angular/material";
+import { MatSnackBarModule, MatIconModule, MatButtonModule } from "@angular/material";
 import { SignalRService } from "../../../user/services/signalr.service";
+import { RouterModule } from "@angular/router";
 @NgModule({
     imports: [
         CommonModule,
+        RouterModule,
+        MatButtonModule,
         MatSidenavModule,
         MatToolbarModule,
-        MatSnackBarModule
+        MatSnackBarModule,
+        MatIconModule
     ],
     declarations: [
         LayoutComponent

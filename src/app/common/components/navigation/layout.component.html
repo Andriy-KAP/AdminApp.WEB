@@ -1,10 +1,24 @@
-<mat-drawer-container class="example-container" autosize>
+<mat-drawer-container class="example-container">
     <mat-drawer #drawer class="example-sidenav" mode="side">
-      <p>Auto-resizing sidenav</p>
+      <mat-toolbar class="sidenav-toolbar" color="primary">
+          <mat-toolbar-row>
+            <mat-icon>fingerprint</mat-icon> Admin app
+          </mat-toolbar-row>
+        <mat-toolbar-row>
+          <a [routerLink]="['/']" routerLinkActive="active-mat-toolbar-row" [routerLinkActiveOptions]="{exact:true}"><mat-icon>home</mat-icon>Home</a>
+        </mat-toolbar-row>
+        <mat-toolbar-row>
+          <a [routerLink]="['/user']" routerLinkActive="active-mat-toolbar-row"><mat-icon>person</mat-icon>Users</a>
+        </mat-toolbar-row>
+        <mat-toolbar-row>
+          <a [routerLink]="['/group']" routerLinkActive="active-mat-toolbar-row"><mat-icon>group</mat-icon>Groups</a>
+        </mat-toolbar-row>
+      </mat-toolbar>
+      <!-- <p>Auto-resizing sidenav</p>
       <p *ngIf="showFiller">Lorem, ipsum dolor sit amet consectetur.</p>
       <button (click)="showFiller = !showFiller" mat-raised-button>
         Toggle extra text
-      </button>
+      </button> -->
     </mat-drawer>
     <mat-toolbar color="primary">
       <span (click)="drawer.toggle()">Admin app</span>
