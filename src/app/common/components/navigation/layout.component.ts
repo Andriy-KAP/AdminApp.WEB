@@ -13,24 +13,24 @@ export class LayoutComponent{
     public canSendMessage: Boolean;
     public allMessages: GetMessage;
     constructor(private snackBar: MatSnackBar, private _signalRService: SignalRService, private _ngZone: NgZone){
-        // this can subscribe for events  
-        this.subscribeToEvents();  
-        // this can check for conenction exist or not.  
+        // this can subscribe for events
+        this.subscribeToEvents();
+        // this can check for conenction exist or not.
         this.canSendMessage = _signalRService.connectionExist;
     }
 
-    private subscribeToEvents(): void {  
-        // if connection exists it can call of method.  
-        this._signalRService.connectionEstablished.subscribe(() => {  
-            this.canSendMessage = true;  
+    private subscribeToEvents(): void {
+        // if connection exists it can call of method.
+        this._signalRService.connectionEstablished.subscribe(() => {
+            this.canSendMessage = true;
             this._signalRService.connectToGroup();
-        });  
+        });
         // finally our service method to call when response received from server event and transfer response to some variable to be shwon on the browser.  
-        this._signalRService.messageReceived.subscribe((message: GetMessage) => {    
+        this._signalRService.messageReceived.subscribe((message: GetMessage) => {
             this._ngZone.run(() => {
                 this.allMessages = message;
                 this._signalRService.openSnackBar(this.snackBar, 'New user has been created.');
-            });  
-        });  
+            });
+        });
     }
 }

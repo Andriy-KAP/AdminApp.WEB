@@ -18,10 +18,6 @@ export class UserComponent{
     onDataLoading(event: any):void{
         this.isDataLoaded = false;
     }
-    onCreated(){
-        debugger;
-        this.onCreatedEvent.emit(true);
-    }
     ngOnInit(){
         
     }

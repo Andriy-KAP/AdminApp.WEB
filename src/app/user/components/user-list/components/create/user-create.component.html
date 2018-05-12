@@ -3,12 +3,11 @@
     <form [formGroup]="form">
         <div class="form-group" *ngFor="let control of form.userCreateControls()">
             
-            <mat-select [errorStateMatcher]="control.matcher" formControlName="{{control.modelProperty}}" *ngIf="control.type == 'select'">
+            <mat-select placeholder="{{control.placeholder}}" [errorStateMatcher]="control.matcher" formControlName="{{control.modelProperty}}" *ngIf="control.type == 'select'">
                 <mat-option *ngFor="let group of dataArray" [value]="group.id">{{group.name}}</mat-option>
-                <!--<mat-error *ngFor="let message of control.getValidationMessages() ">{{message}}</mat-error>-->
             </mat-select>
-            <!--<mat-error *ngFor="let message of control.getValidationMessages() ">{{message}}</mat-error>-->
-             <mat-error *ngFor="let message of control.getValidationMessages()"></mat-error>
+            <mat-error *ngIf="control.type == 'select' && control.touched && control.invalid">{{control.getValidationMessages()[0]}}</mat-error>
+                <!--<mat-error *ngFor="let message of control.getValidationMessages() ">{{message}}</mat-error>-->
             <mat-form-field *ngIf="control.type != 'select'">
                 <input matInput [errorStateMatcher]="control.matcher" formControlName="{{control.modelProperty}}" type="{{control.type}}" placeholder="{{control.placeholder}}">
                 <mat-error *ngFor="let message of control.getValidationMessages() ">{{message}}</mat-error>
