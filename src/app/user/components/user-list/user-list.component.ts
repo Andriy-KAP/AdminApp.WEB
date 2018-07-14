@@ -86,10 +86,10 @@ export class UserListComponent implements OnInit {
         let dialogRef = this.dialog.open(UserEditComponent, {
             width: '550px',
             data: { 
-                //id: user['id'],
+                id: user['id'],
                 username: user['email'],
-                //hashedPassword: user['hashedPassword'], 
-                //groupName: user['groupName'], 
+                hashedPassword: user['hashedPassword'], 
+                groupName: user['groupName'], 
                 groupId: user['groupId'],
                 groups: this.existingGroups  
             }
@@ -97,7 +97,7 @@ export class UserListComponent implements OnInit {
       
           dialogRef.afterClosed().subscribe(result => {
             if(result){
-                let user = new User(result.id, result.email, result.groupId, result.groupName, result.hashedPassword)
+                let user = new User(result.id, result.username, result.groupId, result.groupName, result.hashedPassword)
                 this.service.editUser(user)
                     .subscribe((response)=>{
                         this.loadUsers(this.paginator.pageIndex, this.paginator.pageSize, this.pagination);

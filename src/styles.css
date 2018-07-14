@@ -158,3 +158,9 @@ body{
 .auth-container button{
   width: 50%;
 }
+[hidden] {
+  display: none;
+}
+.hidden-input{
+  display: none;
+}

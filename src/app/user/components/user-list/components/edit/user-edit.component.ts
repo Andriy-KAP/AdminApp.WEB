@@ -26,7 +26,7 @@ export class UserEditComponent{
         });
         return;
       }
-      this.dialogRef.close(this.form);
+      this.dialogRef.close(this.form.value);
     }
     private mapFormData(data: object):void{
       Object.keys(data).forEach(key=>{

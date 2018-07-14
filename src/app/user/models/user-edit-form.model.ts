@@ -55,6 +55,9 @@ export class ValidateUsernameNotTaken{
 export class UserEditFormGroup extends FormGroup{
     constructor(@Inject(UserListService) private userListService){
         super({
+            id: new UserEditFormControl('id', 'Id', '', 'Id', '',[
+
+            ]),
             username: new UserEditFormControl('username', 'Username', 'text', 'Username','',[
                     Validators.required,
                     Validators.minLength(5)
@@ -65,9 +68,14 @@ export class UserEditFormGroup extends FormGroup{
             ),
             groupId: new UserEditFormControl('groupId', 'Group', 'select', 'Group', '', [
                 Validators.required
+            ]),
+            groupName: new UserEditFormControl('groupName', 'GroupName', '', 'GroupName', '', [
+
+            ]),
+            hashedPassword: new UserEditFormControl('hashedPassword', 'HashedPassword', '', 'HashedPassword', '', [
+
             ])
         })
-        debugger;
     }
     userEditControls(): UserEditFormControl[]{
         return Object.keys(this.controls)
