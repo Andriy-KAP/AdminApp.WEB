@@ -9,7 +9,7 @@ export class UserComponent{
     public isDataLoaded: boolean = false; 
     @Output() onCreatedEvent = new EventEmitter<boolean>();
     
-    constructor(private route: ActivatedRoute){    
+    constructor(private route: ActivatedRoute){
     }
 
     onDataLoaded(event: any):void{

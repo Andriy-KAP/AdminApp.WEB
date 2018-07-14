@@ -9,14 +9,17 @@ export class AuthGuard implements CanActivate {
     }
     canActivate(route, state){
         let token = sessionStorage.getItem('auth');
+
         if(token != null){
-            if(this.jwtHelper.isTokenExpired(token)){
-                this.router.navigate(['login']);
-                return false;//token is expired
+            if(!this.jwtHelper.isTokenExpired(token)){
+                return true;
             }
-            return true;//token isn`t expired
         }
-        this.router.navigate(['login']);
-        return false;//token is null
+        this.redirect();
+        return true;
+    }
+    private redirect():void{
+        sessionStorage.removeItem('auth');
+        this.router.navigate(['/login']);
     }
 }

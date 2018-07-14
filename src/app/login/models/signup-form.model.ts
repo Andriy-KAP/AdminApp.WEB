@@ -1,5 +1,14 @@
-import { FormControl, FormGroup, ValidatorFn, Validators, AsyncValidatorFn } from "@angular/forms";
+import { FormControl, FormGroup, ValidatorFn, Validators, AsyncValidatorFn, FormGroupDirective, NgForm } from "@angular/forms";
 import { SignupValidators } from "../components/signup/validators/signup.validators";
+import { ErrorStateMatcher } from "@angular/material";
+
+export class SignupErrormatcher implements ErrorStateMatcher{
+    isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null):boolean
+    {
+        const isSubmitted = form && form.submitted;
+        return !!(control && control.invalid && (control.dirty || control.touched || isSubmitted));
+    }
+}
 
 export class SignupFormControl extends FormControl {
     label: string;

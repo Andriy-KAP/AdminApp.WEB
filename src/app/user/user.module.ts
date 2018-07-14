@@ -4,7 +4,8 @@ import { RouterModule, Routes } from "@angular/router";
 import { UserComponent } from "./user.component";
 import { CommonModule } from "@angular/common";
 import { UserListComponent } from "./components/user-list/user-list.component";
-import { MatTableModule, 
+import { MatGridListModule, 
+    MatTableModule,
     MatPaginatorModule, 
     MatProgressSpinnerModule, 
     MatSortModule, 
@@ -14,7 +15,8 @@ import { MatTableModule,
     MatInputModule,
     MatSelectModule,
     MatCardModule,
-    MatSnackBarModule} from '@angular/material';
+    MatSnackBarModule,
+    MatExpansionModule } from '@angular/material';
 import { UserListService } from "./services/user-list.service";
 import { HttpClientModule } from "@angular/common/http";
 import { CustomHttp } from "../common/services/custom-http.service";
@@ -49,6 +51,7 @@ const routes: Routes=[
         LayoutModule,
         RouterModule.forChild(routes),
         HttpClientModule,
+        MatGridListModule,
         MatTableModule,
         MatPaginatorModule,
         MatProgressSpinnerModule,
@@ -59,7 +62,8 @@ const routes: Routes=[
         MatInputModule,
         MatSelectModule,
         MatCardModule,
-        MatSnackBarModule
+        MatSnackBarModule,
+        MatExpansionModule
     ],
     providers: [
         UserListService,

@@ -1,0 +1,53 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-lg-12">
+                <div class="form-group table-search-panel">
+                    <mat-form-field>
+                        <input [(ngModel)]="filter" (ngModelChange)="onFilterChange($event)" type="text" matInput placeholder="Search"/>
+                        <mat-hint>Type to find user</mat-hint>
+                    </mat-form-field>
+                </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
+            <mat-card-title>
+                <button (click)="create()" mat-button color="primary">Create</button>
+            </mat-card-title>
+            <mat-table [dataSource]="dataSource" matSort>
+                <ng-container matColumnDef="id">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>#</mat-header-cell>
+                    <mat-cell *matCellDef="let sale">{{sale.id}}</mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="name">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Name</mat-header-cell>
+                    <mat-cell *matCellDef="let sale">{{sale.name}}</mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="groupName">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Group</mat-header-cell>
+                    <mat-cell *matCellDef="let sale">{{sale.groupName}}</mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="userName">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Manager</mat-header-cell>
+                    <mat-cell *matCellDef="let sale">{{sale.userName}}</mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="operations">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header></mat-header-cell>
+                        <mat-cell *matCellDef="let user">
+                                <button (click)="edit(user)" mat-button color="primary">Edit</button>
+                                <button (click)="remove(user.id)" mat-button color="primary">Delete</button>
+                        </mat-cell>
+                </ng-container>
+                <mat-header-row *matHeaderRowDef="pagination.columns"></mat-header-row>
+                <mat-row *matRowDef="let row; columns: pagination.columns"></mat-row>
+            </mat-table>
+            <mat-paginator #paginator
+                            [length]="pagination.resultLength"
+                            [pageSize]="10"
+                            [pageSizeOptions]="[5,10,20]"
+                            [showFirstLastButtons]="true"
+                            (page)="onPageChanged($event)">
+            </mat-paginator>
+        </div>
+    </div>
+</div>

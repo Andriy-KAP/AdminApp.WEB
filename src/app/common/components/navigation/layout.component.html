@@ -1,5 +1,5 @@
 <mat-drawer-container class="example-container">
-    <mat-drawer #drawer class="example-sidenav" mode="side">
+    <mat-drawer #drawer class="example-sidenav" mode="side" opened="drawer.opened">
       <mat-toolbar class="sidenav-toolbar" color="primary">
           <mat-toolbar-row>
             <mat-icon>fingerprint</mat-icon> Admin app
@@ -12,6 +12,9 @@
         </mat-toolbar-row>
         <mat-toolbar-row>
           <a [routerLink]="['/group']" routerLinkActive="active-mat-toolbar-row"><mat-icon>group</mat-icon>Groups</a>
+        </mat-toolbar-row>
+        <mat-toolbar-row>
+          <a [routerLink]="['/sale']" routerLinkActive="active-mat-toolbar-row"><mat-icon>record_voice_over</mat-icon>Sales</a>
         </mat-toolbar-row>
       </mat-toolbar>
       <!-- <p>Auto-resizing sidenav</p>

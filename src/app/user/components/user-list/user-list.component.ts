@@ -10,6 +10,7 @@ import { Group } from "../../../group/models/group.model";
 import { UserCreateComponent } from "./components/create/user-create.component";
 import { GetMessage } from "../../services/getmessage";
 import { SignalRService } from "../../services/signalr.service";
+import { GlobalUserInfo } from "../../models/global-user-info.model";
 
 @Component({
     selector: 'user-list',
@@ -18,6 +19,8 @@ import { SignalRService } from "../../services/signalr.service";
 
 @Injectable()
 export class UserListComponent implements OnInit {
+    public filter: string;
+    public globalUserInfo: GlobalUserInfo;
     public pagination: UserPaginationModel;
     public dataSource : MatTableDataSource<any>;
     @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -34,41 +37,61 @@ export class UserListComponent implements OnInit {
         this.pagination = new UserPaginationModel();
         this.loaded = new EventEmitter<any>();
         this.loading = new EventEmitter<any>();
+        
     }
     ngOnInit(){
-        this.groupService.getGroups(1, 2)
+        this.groupService.getGroups(1,10)
             .subscribe((response)=>{
                 this.existingGroups= response.data;
-            })
+            });
     }
     ngAfterViewInit(){
         this.loadUsers(this.paginator.pageIndex, this.paginator.pageSize, this.pagination);
     }
 
-    onPageChanged(context): void{
-        this.loadUsers(context.pageIndex, context.pageSize, this.pagination);
+    onFilterChange(){
+        //debugger;
+        console.log(this.filter);
+        this.loadUsers(0, this.paginator.pageSize, this.pagination, this.filter);
     }
 
-    private loadUsers(pageIndex: number, pageSize: number, paginationModel: UserPaginationModel):void{
-        this.loading.emit(null);
-        this.service.getUsers(pageIndex+1, pageSize)
+    onPageChanged(context): void{
+        this.loadUsers(context.pageIndex, context.pageSize, this.pagination, this.filter);
+    }
+
+    private loadUsersGlobalInfo(){
+        this.service.getUsersInfo()
+            .subscribe((response)=>{
+                this.globalUserInfo = new GlobalUserInfo(
+                    response.data.allUsersCount,
+                    response.data.adminsCount,
+                    response.data.managersCount
+                );
+                this.loaded.emit(null);
+            });
+    }
+
+    private loadUsers(pageIndex: number, pageSize: number, paginationModel: UserPaginationModel, search?: string):void{
+        //this.loading.emit(null);
+        this.service.getUsers(pageIndex+1, pageSize, search)
         .subscribe((response)=>{
             this.pagination.users = response.data.items;
             this.dataSource = new MatTableDataSource(this.pagination.users);
             this.dataSource.sort = this.sort;
             paginationModel.resultLength = response.data.totalCount;
-            this.loaded.emit(null);
+            this.loadUsersGlobalInfo();
         });
     }
     edit(user: User){
         let dialogRef = this.dialog.open(UserEditComponent, {
             width: '550px',
-            data: { id: user['id'], 
-                email: user['email'], 
-                hashedPassword: user['hashedPassword'], 
-                groupName: user['groupName'], 
+            data: { 
+                //id: user['id'],
+                username: user['email'],
+                //hashedPassword: user['hashedPassword'], 
+                //groupName: user['groupName'], 
                 groupId: user['groupId'],
-                groups: this.existingGroups    
+                groups: this.existingGroups  
             }
           });
       

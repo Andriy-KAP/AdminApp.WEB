@@ -7,7 +7,7 @@ export class GroupService {
     constructor(private http: CustomHttp){
 
     }
-    getGroups(pageIndex: number, pageSize: number){
+    getGroups(pageIndex: number, pageSize: number, search?: string){
         let headers: HttpHeaders = new HttpHeaders({
             'Content-Type': 'application/x-www-form-urlencoded',
             'Accept': 'application/json',
@@ -16,7 +16,8 @@ export class GroupService {
         let params: HttpParams=new HttpParams()
             .set('PageIndex', pageIndex.toString())
             .set('PageSize', pageSize.toString())
+            .set('Search', search)
             
-        return this.http.get(`Group/GetGroupsCollection?PageIndex=${pageIndex}&PageSize=${pageSize}`, headers);
+        return this.http.get(`Group/GetGroupsCollection?PageIndex=${pageIndex}&PageSize=${pageSize}&Search=${search || ''}`, headers);
     }
 }

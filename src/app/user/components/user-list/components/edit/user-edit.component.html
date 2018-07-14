@@ -1,34 +1,22 @@
-<!-- <h1 mat-dialog-title>Hi {{data.name}}</h1>
-<div mat-dialog-content>
-  <p>What's your favorite animal?</p>
-  <mat-form-field>
-    <input matInput [(ngModel)]="data.animal">
-  </mat-form-field>
-</div>
-<div mat-dialog-actions>
-  <button mat-button (click)="onNoClick()">No Thanks</button>
-  <button mat-button [mat-dialog-close]="data.animal" cdkFocusInitial>Ok</button>
-</div> -->
 <h1 mat-dialog-title>Edit</h1>
 <div mat-dialog-content>
-        <input type="hidden" [(ngModel)]="data.id">
-        <input type="hidden" [(ngModel)]="data.groupId">
-        <mat-form-field>
-          <input matInput [(ngModel)]="data.email">
-        </mat-form-field>
-        <mat-form-field>
-          <!--<mat-select [(value)]="data.groupName">
-            <mat-option *ngFor="let group of data.groups" [value]="group.groupId">{{group.groupName}}</mat-option>
-          </mat-select>-->
-          <mat-select [(value)]="data.groupId">
-            <mat-option *ngFor="let group of dataArray" [value]="group.id">{{group.name}}</mat-option>
-          </mat-select>
-        </mat-form-field>
-        <!--<mat-form-field>
-            <input matInput [(ngModel)]="data.hashedPassword">
-        </mat-form-field>-->
-      </div>
-      <div mat-dialog-actions>
-        <button mat-button >Cancel</button>
-        <button mat-button [mat-dialog-close]="data" cdkFocusInitial>Save</button>
-      </div>
+    <form [formGroup]="form">
+        <div class="form-group" *ngFor="let control of form.userEditControls()">
+            
+            <mat-select [value]="" placeholder="{{control.placeholder}}" [errorStateMatcher]="control.matcher" formControlName="{{control.modelProperty}}" *ngIf="control.type == 'select'">
+                <mat-option *ngFor="let group of dataArray" [value]="group.id">{{group.name}}</mat-option>
+            </mat-select>
+            <mat-error *ngIf="control.type == 'select' && control.touched && control.invalid">{{control.getValidationMessages()[0]}}</mat-error>
+            <mat-form-field *ngIf="control.type != 'select'">
+                <input matInput [errorStateMatcher]="control.matcher" formControlName="{{control.modelProperty}}" type="{{control.type}}" placeholder="{{control.placeholder}}">
+                <mat-error *ngFor="let message of control.getValidationMessages() ">{{message}}</mat-error>
+                <!--<mat-error *ngIf="control.status === 'VALID'">Username is available</mat-error>-->
+            </mat-form-field>
+            <div *ngIf="control.status === 'PENDING'">Checking...</div>
+        </div>
+    </form>
+</div>
+<div mat-dialog-actions>
+    <button mat-button (click)="close()">Cancel</button>
+    <button mat-button (click)="save()">Save</button>
+</div>

@@ -1,4 +1,4 @@
-import { Component, ContentChild, AfterContentInit, OnInit, ViewChild, NgZone } from "@angular/core";
+import { Component, ContentChild, AfterContentInit, OnInit, ViewChild, NgZone, ElementRef } from "@angular/core";
 import { MatSnackBar } from "@angular/material";
 import { UserComponent } from "../../../user/user.component";
 import { SignalRService } from "../../../user/services/signalr.service";
@@ -12,11 +12,15 @@ export class LayoutComponent{
     @ViewChild('userComponent') userComponent: any;
     public canSendMessage: Boolean;
     public allMessages: GetMessage;
+    public isDrawerOpened: boolean = false;
+    @ViewChild('drawer') drawer: any;
+
     constructor(private snackBar: MatSnackBar, private _signalRService: SignalRService, private _ngZone: NgZone){
         // this can subscribe for events
         this.subscribeToEvents();
         // this can check for conenction exist or not.
         this.canSendMessage = _signalRService.connectionExist;
+        this.isDrawerOpened = false;
     }
 
     private subscribeToEvents(): void {

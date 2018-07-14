@@ -12,6 +12,7 @@ import { GroupCreateComponent } from "./components/create/group-create.component
     templateUrl: './group-list.component.html'
 })
 export class GroupListComponent implements OnInit{
+    public filter: string; 
     public pagination: GroupPaginationModel;
     public dataSource: MatTableDataSource<any>;
     @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -26,17 +27,21 @@ export class GroupListComponent implements OnInit{
     }
 
     ngOnInit(){
-        this.getGroups(0,10, this.pagination);
+        
     }
     ngAfterViewInit(){
-
+        this.getGroups(0,10, this.pagination);
+    }
+    onFilterChange(){
+        console.log(this.filter);
+        this.getGroups(0, this.paginator.pageSize, this.pagination, this.filter)
     }
     onPageChanged(context):void{
-        this.getGroups(context.pageIndex, context.pageSize, this.pagination);
+        this.getGroups(context.pageIndex, context.pageSize, this.pagination, this.filter);
     }
-    private getGroups(pageIndex: number, pageSize: number, paginationModel: GroupPaginationModel): void{
+    private getGroups(pageIndex: number, pageSize: number, paginationModel: GroupPaginationModel, search?: string): void{
             this.loading.emit(null);
-        this.service.getGroups(pageIndex +1, pageSize)
+        this.service.getGroups(pageIndex +1, pageSize, search)
             .subscribe((response)=>{
                 this.pagination.groups = response.data.items;
                 this.dataSource = new MatTableDataSource(this.pagination.groups);

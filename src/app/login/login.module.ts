@@ -8,6 +8,7 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { LoginService } from "./services/login.service";
 import { CustomHttp } from "../common/services/custom-http.service";
 import { HttpClientModule } from "@angular/common/http";
+import { MatCardModule, MatToolbarModule, MatInputModule, MatButtonModule } from '@angular/material';
 
 const routes: Routes =[
     {
@@ -27,7 +28,11 @@ const routes: Routes =[
         MatStepperModule,
         FormsModule,
         ReactiveFormsModule,
-        HttpClientModule
+        HttpClientModule,
+        MatCardModule,
+        MatToolbarModule,
+        MatInputModule,
+        MatButtonModule
     ],
     providers: [ LoginService, CustomHttp ],
     bootstrap: [ LoginComponent ]

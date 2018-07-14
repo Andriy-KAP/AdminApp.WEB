@@ -1,0 +1,11 @@
+<layout>
+    <h1>Sale</h1>
+    <sale-list (loaded)="onDataLoaded($event)" (loading)="onDataLoading($event)"></sale-list>
+    <div class="example-loading-shade"
+    *ngIf="!isDataLoaded">
+        <mat-spinner *ngIf="!isDataLoaded"></mat-spinner>
+        <div class="example-rate-limit-reached" *ngIf="isRateLimitReached">
+            GitHub's API rate limit has been reached. It will be reset in one minute.
+        </div>
+    </div>
+</layout>

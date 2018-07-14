@@ -56,11 +56,12 @@ body{
   left: 0;
   bottom: 56px;
   right: 0;
-  background: rgba(0, 0, 0, 0.15);
+  background: #fafafa;/*rgba(0, 0, 0, 0.15)*/;
   z-index: 1;
   display: flex;
   align-items: center;
   justify-content: center;
+  margin-top: 64px; /*To make top sidenav visiable*/
 }
 
 .example-rate-limit-reached {
@@ -108,4 +109,52 @@ body{
 }
 .sidenav-toolbar .mat-toolbar-row span{
   padding-left: 20px;
+}
+
+/*User page*/
+.user-table-info{
+  margin-top: 37px;
+}
+.table-search-panel{
+  float: right;
+  margin-bottom: 0px;
+}
+
+/*Auth page*/
+.auth-container{
+  margin: auto;
+  width: 40%;
+  height: 100%;
+  position: relative;
+}
+.auth-container .mat-card{
+  height: 350px;
+  top: 40%;
+  transform: translateY(-50%);
+  justify-content: center;
+}
+.auth-container .mat-card .mat-toolbar{
+  margin-bottom: 20px;
+}
+.auth-logo{
+  flex: 1 1 auto;
+  text-align: center;
+}
+.auth-container .form-group{
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+}
+.mat-form-input{
+  width: auto;
+}
+.mat-input-container{
+  width: 50%;
+  text-align: center;
+}
+.auth-container .mat-form-field{
+  text-align: center;
+}
+.auth-container button{
+  width: 50%;
 }
