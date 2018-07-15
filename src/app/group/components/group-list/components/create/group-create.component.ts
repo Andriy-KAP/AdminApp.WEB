@@ -14,15 +14,20 @@ export class GroupCreateComponent{
     constructor(private dialogRef: MatDialogRef<GroupCreateComponent>,
     @Inject(MAT_DIALOG_DATA) private data: any){
         this.form = new GroupCreateFormGroup();
+        this.dataArray = data.offices;
+        debugger;
     }
 
     cancel():void{
         this.dialogRef.close();
     }
     create():void{
-        debugger;
-        if(this.form.valid){
-            this.dialogRef.close(this.form);
+        if(!this.form.valid){
+            Object.keys(this.form.controls).forEach(control=>{
+                this.form.controls[control].markAsTouched();
+            });
+            return;
         }
+        this.dialogRef.close(this.form.value);
     }
 }

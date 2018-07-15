@@ -6,6 +6,8 @@ import { Group } from "../../models/group.model";
 import { GroupEditComponent } from "./components/edit/group-edit.component";
 import { GroupRemoveComponent } from "./components/remove/group-remove.component";
 import { GroupCreateComponent } from "./components/create/group-create.component";
+import { OfficeService } from "../../services/office.service";
+import { Office } from "../../models/office.model";
 
 @Component({
     selector: 'group-list',
@@ -20,14 +22,20 @@ export class GroupListComponent implements OnInit{
     @Output() loaded: EventEmitter<any>;
     @Output() loading: EventEmitter<any>;
 
-    constructor(private service: GroupService, public dialog: MatDialog){
+    private existingOffices: Office[];
+
+    constructor(private service: GroupService, private officeService: OfficeService,public dialog: MatDialog){
         this.pagination = new GroupPaginationModel();
         this.loaded= new EventEmitter<any>();
         this.loading = new EventEmitter<any>();
     }
 
     ngOnInit(){
-        
+        this.officeService.getOffices(1,10)
+        .subscribe((response)=>{
+            debugger;
+            this.existingOffices= response.data.items;
+        });
     }
     ngAfterViewInit(){
         this.getGroups(0,10, this.pagination);
@@ -75,14 +83,20 @@ export class GroupListComponent implements OnInit{
         })
     }
     create(){
+        debugger;
         let dialogRef = this.dialog.open(GroupCreateComponent,{
             width: '550px',
-            data: null
+            data: {
+                offices: this.existingOffices
+            }
         });
 
         dialogRef.afterClosed().subscribe(result=>{
             if(result){
-                debugger;
+                this.service.createGroup(result)
+                    .subscribe((response)=>{
+
+                    });
             }
         })
     }

@@ -42,7 +42,13 @@ export class GroupCreateFormGroup extends FormGroup{
         super({
             name: new GroupCreateFormControl('name', 'Name', 'text', 'Name', '', [
                 Validators.required,
-                Validators.minLength(5)])
+                Validators.minLength(5)]),
+            officeId: new GroupCreateFormControl('officeId', 'OfficeId', 'select', 'Office', '', [
+                Validators.required
+            ]),
+            officeName: new GroupCreateFormControl('officeName', 'OfficeName', '', 'OfficeName', '', [
+                
+            ])
         });
     }
 

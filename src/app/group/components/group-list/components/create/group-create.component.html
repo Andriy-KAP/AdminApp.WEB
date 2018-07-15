@@ -1,8 +1,12 @@
 <h1 mat-dialog-title>Create</h1>
 <div mat-dialog-content>
     <form [formGroup]="form">
-        <div class="form-group" *ngFor="let control of form.groupCreateControls()">
-            <mat-form-field>
+        <div [ngClass]="{ 'hidden-input': control.type==''}" class="form-group" *ngFor="let control of form.groupCreateControls()">
+            <mat-select placeholder="{{control.placeholder}}" [errorStateMatcher]="control.matcher" formControlName="{{control.modelProperty}}" *ngIf="control.type == 'select'">
+                <mat-option *ngFor="let office of dataArray" [value]="office.id">{{office.name}}</mat-option>
+            </mat-select>
+            <mat-error *ngIf="control.type == 'select' && control.touched && control.invalid">{{control.getValidationMessages()[0]}}</mat-error>
+            <mat-form-field *ngIf="control.type != 'select'">
                 <input [errorStateMatcher]="control.matcher" matInput formControlName="{{control.modelProperty}}" type="{{control.type}}" placeholder="{{control.placeholder}}">
                 <mat-error *ngFor="let message of control.getValidationMessages() ">{{message}}</mat-error>
             </mat-form-field>
